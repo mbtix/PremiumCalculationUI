@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "2cZEbdQvnYRXacJWrp4ScuWLcQ3sBgkZG4eJnj/Nzr+91FtEwErn0i4fgdt8FWbogJfsmW0dqXxOsfMAJETe0w==",
+  "success": true,
+  "projectFilePath": "C:\\Adactin\\PremiumCalculation\\PremiumCalculationUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

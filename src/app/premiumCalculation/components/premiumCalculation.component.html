@@ -1,0 +1,97 @@
+<!-- Custom styles for this template -->
+
+<div>
+  <form>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label class="control-label"> Full Name<span class="star">*</span></label>
+        <input class="form-control" placeholder="" id="fullName" type="text" name="fullName" title="First Name" (blur)="validateFields('name')"
+        (keypress)="validateFields('name')"
+          maxlength="30" [(ngModel)]="premium.FullName">
+        <div *ngIf="formErrors.FullName">
+          <p class="text-danger"><small>{{ formErrors.FullName }}</small></p>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <label class="control-label"> Age<span class="star">*</span></label>
+        <input class="form-control" placeholder="" id="age" type="text" title="Age" name="age" [(ngModel)]="premium.Age"
+          (blur)="validateFields('a')" pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('a')"
+          type="number">
+        <div *ngIf="formErrors.Age">
+          <p class="text-danger"><small>{{ formErrors.Age }}</small></p>
+        </div>
+      </div>
+     
+        <div class="col-sm-12">
+          <label class="control-label"> DOB<span class="star">*</span></label>
+          <input type="text" [(ngModel)]="premium.DOB" (ngModelChange)="validateFields('dob')" placeholder="Datepicker" name="dob" class="inline-b form-control"
+            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
+          <div *ngIf="formErrors.DOB">
+            <p class="text-danger"><small>{{ formErrors.DOB }}</small></p>
+          </div>
+        </div>
+     
+        <div class="col-sm-6" *ngIf="premium.DOB">
+          <button class="btn btn_out_blue pull-right" (click)="premium.DOB = null"><small>Clear Date</small></button>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="control-label"> Death – Sum Insured<span class="star">*</span></label>
+          <input class="form-control" placeholder="" id="deathAssured" name="deathAssured" type="number"
+            title="Death Assured" [(ngModel)]="premium.DeathAssured" (blur)="validateFields('d')"
+            pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('d')" type="number">
+          <div *ngIf="formErrors.DeathAssured">
+            <p class="text-danger"><small>{{ formErrors.DeathAssured }}</small></p>
+          </div>
+        </div>
+
+      <div class="col-sm-12">
+        <label class="control-label"> Occupation<span class="star">*</span></label>
+        <select class="form-control" [disabled]="!isValid" [(ngModel)]="premium.Occupation" name="occupation" (ngModelChange)="calculatePremium()">
+          <option value="null" disabled>Select Occupation</option>
+          <option value="LMl">Cleaner</option>
+          <option value="PRF">Doctor</option>
+          <option value="WCL">Author</option>
+          <option value="HML">Farmer</option>
+          <option value="HML">Mechanic</option>
+          <option value="LMl">Florist</option>
+        </select>
+        <div *ngIf="formErrors.Occupation">
+          <p class="text-danger"><small>{{ formErrors.Occupation }}</small></p>
+        </div>
+      </div>
+
+      
+    </div>
+    <br>
+    <div class="clear col-sm-12  margin-bottom-10 pull-right">
+      <div *ngIf="formErrors.ApiError">
+        <p class="text-danger"><small>{{  formErrors.ApiError }}</small></p>
+      </div>
+        <label class="control-label " style="padding-left: 8px; font-size: large;"><b>Premium Amount: {{premium.CalculatedValue ? premium.CalculatedValue : "0.00"}}</b><span class="star"></span></label>
+      </div>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2021-2022</p>
+  </form>
+</div>
+
+<script>
+  function check(e, value) {
+    //Check Charater
+    var unicode = e.charCode ? e.charCode : e.keyCode;
+    if (value.indexOf(".") != -1) if (unicode == 46) return false;
+    if (unicode != 8) if ((unicode < 48 || unicode > 57) && unicode != 46) return false;
+  }
+  function checkLength(len, ele) {
+    var fieldLength = ele.value.length;
+    if (fieldLength <= len) {
+      return true;
+    }
+    else {
+      var str = ele.value;
+      str = str.substring(0, str.length - 1);
+      ele.value = str;
+    }
+  }
+</script>
