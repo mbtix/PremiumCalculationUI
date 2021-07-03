@@ -13,7 +13,7 @@ export class PremiumCalculationService  {
   
   //call GET API to calculate Premium
   getCalculatedPremium(premium: PremiumModel) { 
-    return this.httpService.post('https://localhost:44336/PremiumCalculation', premium)
+    return this.httpService.post('https://localhost:44316/PremiumCalculation', premium)
   }
 
 }
