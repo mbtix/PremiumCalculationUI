@@ -12,5 +12,5 @@
     DOB: Date;
     DeathAssured: number;
     Occupation: string;
-    CalculatedValue: number;
+    CalculatedValue: string;
   }

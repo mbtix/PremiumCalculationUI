@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PremiumCalculationService } from '../services/premiumCalculation.service'
 import { PremiumModel } from '../model/common'
-
+import { windowWhen } from 'rxjs/operators';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Component({
   selector: 'app-login',
@@ -23,18 +24,9 @@ export class PremiumCalculationComponent implements OnInit {
   }
   //#region Validation
   validateFields(event: string) {
-    
-    if (event == 'a' && (!this.premium.Age || (this.premium.Age && (this.premium.Age > 75 || this.premium.Age < 18)))) {
-      this.formErrors.Age = "Age is mandatory and should be between 18 and 75."
-      this.isValid = false;
-      this.premium.Occupation = null;
-      return;
-    } else {
-      this.formErrors.Age = "";
-      
-    }
+
     if (event == 'd' && !this.premium.DeathAssured || (this.premium.DeathAssured && (this.premium.DeathAssured < 1000 || this.premium.DeathAssured > 500000))) {
-      this.formErrors.DeathAssured = "Death Assured should be between 1000 and 500000."
+      this.formErrors.DeathAssured = "Death Insured should be between 1000 and 500000."
       this.isValid = false;
       this.premium.Occupation = null;
       return;
@@ -44,14 +36,15 @@ export class PremiumCalculationComponent implements OnInit {
     if (event == 'dob' && this.premium.DOB) {
       const todayDate = new Date();
       const ageyear = todayDate.getFullYear() - this.premium.DOB.getFullYear();
-      if (ageyear < 18) {
-        this.formErrors.DOB = "DOB should be minimum of 18 years, please select the date accordingly.";
+      if (ageyear < 10) {
+        this.formErrors.DOB = "Age should be above 10 years, please select the date accordingly.";
         this.isValid = false;
         this.premium.Occupation = null;
         return;
       } else {
         this.formErrors.DOB = '';
-        
+        this.calculateAge();
+
       }
     }
     if (event == 'dob' && !this.premium.DOB) {
@@ -61,10 +54,11 @@ export class PremiumCalculationComponent implements OnInit {
       return;
     } else {
       this.formErrors.DOB = "";
+      this.calculateAge();
     }
     if (event == 'name' && !this.premium.FullName || this.premium.FullName == '') {
       this.formErrors.FullName = "Full name is mandatory."
-      this.isValid =  false;
+      this.isValid = false;
       this.premium.Occupation = null;
       return;
     } else {
@@ -75,22 +69,47 @@ export class PremiumCalculationComponent implements OnInit {
   }
   //#endregion
 
-   //#region calculation
+  //#region Age calculation
+  calculateAge() {
+    if (this.premium.DOB) {
+      let timeDiff = Math.abs(Date.now() - this.premium.DOB.getTime());
+      this.premium.Age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+    }
+
+  }
+  //#endregion
+
+  //#region clear fields
+  clearAllFields() {
+    this.premium = new PremiumModel();
+  }
+  //#endregion
+
+  //#region calculation
   calculatePremium() {
-    if(!this.isValid) {
+    if (!this.isValid) {
       return false;
     }
     this.premiumService.getCalculatedPremium(this.premium).subscribe(success => {
 
-      if(success < 1) {
-        this.formErrors.ApiError = 'Error while calculating premium';
+      if (success < 1) {
+        this.formErrors.ApiError = 'Something went wrong, please reenter all mandatory fields';
         return
       }
-      this.premium.CalculatedValue = success;
+      // Create our number formatter.
+      var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+
+      this.premium.CalculatedValue = formatter.format(success); /* $2,500.00 */
+
     });
   }
+
+
   //#endregion
-  
+
   //Form Errors
   formErrors = {
     "DOB": "",

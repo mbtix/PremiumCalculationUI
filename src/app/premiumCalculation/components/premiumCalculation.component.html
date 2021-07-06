@@ -3,52 +3,64 @@
 <div>
   <form>
     <div class="form-group">
+      <div>
+        <header>
+          <h5 class="col-sm-12" style="text-align: center; padding-top: 30px; font-size: 20px;"> <b>Premium
+              Calculation</b></h5>
+        </header>
+      </div>
       <div class="col-sm-12">
-        <label class="control-label"> Full Name<span class="star">*</span></label>
-        <input class="form-control" placeholder="" id="fullName" type="text" name="fullName" title="First Name" (blur)="validateFields('name')"
-        (keypress)="validateFields('name')"
-          maxlength="30" [(ngModel)]="premium.FullName">
+        <label class="control-label" style="font-weight: 400; font-size: 16px;"> <b>Full Name</b><span
+            class="star">*</span></label>
+        <input class="form-control" tabindex="1" autofocus placeholder="" id="fullName" type="text" name="fullName" title="First Name"
+          (blur)="validateFields('name')" (keypress)="validateFields('name')" maxlength="30"
+          [(ngModel)]="premium.FullName">
         <div *ngIf="formErrors.FullName">
           <p class="text-danger"><small>{{ formErrors.FullName }}</small></p>
         </div>
       </div>
 
-      <div class="col-sm-12">
-        <label class="control-label"> Age<span class="star">*</span></label>
-        <input class="form-control" placeholder="" id="age" type="text" title="Age" name="age" [(ngModel)]="premium.Age"
-          (blur)="validateFields('a')" pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('a')"
-          type="number">
-        <div *ngIf="formErrors.Age">
-          <p class="text-danger"><small>{{ formErrors.Age }}</small></p>
+
+
+      <div class="col-sm-12" style="padding-top: 5px;">
+        <label class="control-label" style="font-weight: 400; font-size: 16px;"><b>DOB</b> <span
+            class="star">*</span></label>
+        <input type="text" tabindex="2" [(ngModel)]="premium.DOB" readonly (ngModelChange)="validateFields('dob');"
+          placeholder="Datepicker" name="dob" class="inline-b form-control" bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
+        <div *ngIf="formErrors.DOB">
+          <p class="text-danger"><small>{{ formErrors.DOB }}</small></p>
         </div>
       </div>
-     
-        <div class="col-sm-12">
-          <label class="control-label"> DOB<span class="star">*</span></label>
-          <input type="text" [(ngModel)]="premium.DOB" (ngModelChange)="validateFields('dob')" placeholder="Datepicker" name="dob" class="inline-b form-control"
-            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}">
-          <div *ngIf="formErrors.DOB">
-            <p class="text-danger"><small>{{ formErrors.DOB }}</small></p>
-          </div>
-        </div>
-     
-        <div class="col-sm-6" *ngIf="premium.DOB">
-          <button class="btn btn_out_blue pull-right" (click)="premium.DOB = null"><small>Clear Date</small></button>
-        </div>
 
-        <div class="col-sm-12">
-          <label class="control-label"> Death – Sum Insured<span class="star">*</span></label>
-          <input class="form-control" placeholder="" id="deathAssured" name="deathAssured" type="number"
-            title="Death Assured" [(ngModel)]="premium.DeathAssured" (blur)="validateFields('d')"
-            pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('d')" type="number">
-          <div *ngIf="formErrors.DeathAssured">
-            <p class="text-danger"><small>{{ formErrors.DeathAssured }}</small></p>
-          </div>
-        </div>
+      <div class="col-sm-12" style="padding-top: 5px;">
+        <label class="control-label" style="font-weight: 400; font-size: 16px;"><b>Age by DOB in years</b></label>
+        <input type="text" name="age" class="inline-b form-control" readonly disabled [(ngModel)]="premium.Age"
+          style="background-color: blanchedalmond;">
+      </div>
 
-      <div class="col-sm-12">
-        <label class="control-label"> Occupation<span class="star">*</span></label>
-        <select class="form-control" [disabled]="!isValid" [(ngModel)]="premium.Occupation" name="occupation" (ngModelChange)="calculatePremium()">
+      <div class="col-sm-6" *ngIf="premium.DOB">
+        <button class="btn btn_out_blue pull-right" (click)="premium.DOB = null"><small>Clear Date</small></button>
+      </div>
+
+
+      <div class="col-sm-12" style="padding-top: 5px;">
+        <label class="control-label"  style="font-weight: 400; font-size: 16px;"> <b>Death – Sum Insured</b><span
+            class="star">*</span></label>
+        <input class="form-control"  tabindex="3" placeholder="" id="deathAssured" name="deathAssured" type="number"
+          title="Death Assured" [(ngModel)]="premium.DeathAssured" (blur)="validateFields('d')"
+          pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('d')" type="number">
+        <div *ngIf="formErrors.DeathAssured">
+          <p class="text-danger"><small>{{ formErrors.DeathAssured }}</small></p>
+        </div>
+      </div>
+
+
+      <div class="col-sm-12" style="padding-top: 5px;">
+        <label class="control-label" style="font-weight: 400; font-size: 16px;"> <b>Occupation</b><span
+            class="star">*</span></label>
+        <select class="form-control" tabindex="4" [disabled]="!isValid" [(ngModel)]="premium.Occupation" name="occupation"
+          (ngModelChange)="calculatePremium()">
           <option value="null" disabled>Select Occupation</option>
           <option value="LMl">Cleaner</option>
           <option value="PRF">Doctor</option>
@@ -62,15 +74,18 @@
         </div>
       </div>
 
-      
+      <div class="col-sm-12">
+        <a class="btn btn-text" title="Clear Selection" (click)="clearAllFields()"> <u><b><small>Clear
+                All</small></b></u></a>
+      </div>
     </div>
-    <br>
-    <div class="clear col-sm-12  margin-bottom-10 pull-right">
+    <div class="col-sm-12  margin-bottom-10 pull-right">
       <div *ngIf="formErrors.ApiError">
-        <p class="text-danger"><small>{{  formErrors.ApiError }}</small></p>
+        <p class="text-danger"><small>{{ formErrors.ApiError }}</small></p>
       </div>
-        <label class="control-label " style="padding-left: 8px; font-size: large;"><b>Premium Amount: {{premium.CalculatedValue ? premium.CalculatedValue : "0.00"}}</b><span class="star"></span></label>
-      </div>
+      <label class="control-label " style="padding-left: 8px; font-size: large; "><b>Calculated Premium Amount:
+          {{premium.CalculatedValue ? premium.CalculatedValue : "0.00"}}</b><span class="star"></span></label>
+    </div>
 
     <p class="mt-5 mb-3 text-muted">&copy; 2021-2022</p>
   </form>
