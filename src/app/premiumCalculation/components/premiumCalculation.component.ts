@@ -25,7 +25,7 @@ export class PremiumCalculationComponent implements OnInit {
   //#region Validation
   validateFields(event: string) {
 
-    if (event == 'd' && !this.premium.DeathAssured || (this.premium.DeathAssured && (this.premium.DeathAssured < 1000 || this.premium.DeathAssured > 500000))) {
+    if (event == 'd' && !this.premium.DeathInsured || (this.premium.DeathInsured && (this.premium.DeathInsured < 1000 || this.premium.DeathInsured > 500000))) {
       this.formErrors.DeathAssured = "Death Insured should be between 1000 and 500000."
       this.isValid = false;
       this.premium.Occupation = null;

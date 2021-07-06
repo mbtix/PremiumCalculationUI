@@ -47,8 +47,8 @@
       <div class="col-sm-12" style="padding-top: 5px;">
         <label class="control-label"  style="font-weight: 400; font-size: 16px;"> <b>Death – Sum Insured</b><span
             class="star">*</span></label>
-        <input class="form-control"  tabindex="3" placeholder="" id="deathAssured" name="deathAssured" type="number"
-          title="Death Assured" [(ngModel)]="premium.DeathAssured" (blur)="validateFields('d')"
+        <input class="form-control"  tabindex="3" placeholder="" id="DeathInsured" name="deathInsured" type="number"
+          title="Death Insured" [(ngModel)]="premium.DeathInsured" (blur)="validateFields('d')"
           pattern="^(0{0,2}[1-9]|0?[1-9][0-9]|[1-9][0-9][0-9])$" (keypress)="validateFields('d')" type="number">
         <div *ngIf="formErrors.DeathAssured">
           <p class="text-danger"><small>{{ formErrors.DeathAssured }}</small></p>

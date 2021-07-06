@@ -10,7 +10,7 @@
     FullName: string;
     Age: number;
     DOB: Date;
-    DeathAssured: number;
+    DeathInsured: number;
     Occupation: string;
     CalculatedValue: string;
   }
