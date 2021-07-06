@@ -37,7 +37,7 @@ export class PremiumCalculationComponent implements OnInit {
       const todayDate = new Date();
       const ageyear = todayDate.getFullYear() - this.premium.DOB.getFullYear();
       if (ageyear < 10) {
-        this.formErrors.DOB = "Age should be above 10 years, please select the date accordingly.";
+        this.formErrors.DOB = "Age should be above 9 years, please select the date accordingly.";
         this.isValid = false;
         this.premium.Occupation = null;
         return;
